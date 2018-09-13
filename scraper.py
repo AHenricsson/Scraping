@@ -15,9 +15,8 @@ import os
 
 urllib3.disable_warnings()
 
-def save_html(html_txt, brand):
+def save_html(html_txt, filename):
     #Saves HTML to autamatically generated filename.
-    filename = make_filename(brand)
     file = open(filename,  "w+")
     file.write(html_txt)
     file.close()
@@ -34,9 +33,11 @@ def file_search(file_str,  search_str):
     file = open(file_str,  "r")
     lines = []
     for line in file:
+        #print("Searching line: {0}".format(line))
         if search_str in line:
-            print(line) #Testing
+            print("found line: {0}".format(line)) #Testing
             lines.append(line)
+        else: print("found nothing in this line")
     return lines
             
 def parse(brand):
@@ -48,9 +49,10 @@ def parse(brand):
 			response = requests.get(url, headers=headers, verify=False)
 			print ("Parsing page")
 			text = response.text
-			save_html(text,  brand)
-#          print ("response: {0}".format(response.text))
-			print(file_search(make_filename(brand), '<li id="srp-river-results-listing"'))
+			filename = make_filename(brand)
+			save_html(text,  filename)
+#          print ("response: {0}".for<mat(response.text))
+			print("search results:{0}".format(file_search(filename, 's-item__price')))
 #            
 #          <div class="s-item__detail s-item__detail--primary"><span class="s-item__price">177.24 SEK</span></div>
 #          <li id="srp-river-results-listing1" class="s-item" data-view="mi:1686|iid:1>
